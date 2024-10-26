@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voldep
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      test: vol
+  template:
+    metadata:
+      labels:
+        test: vol
+    spec:
+      containers:
+        - name: volcont
+          image: ankitmaji209/volapp
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /app/story
+              name: volpv
+      volumes:
+        - name: volpv
+          persistentVolumeClaim:
+            claimName: vol-pvc
+          
+
